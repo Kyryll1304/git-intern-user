@@ -1,0 +1,76 @@
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.heading {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.searchBar {
+  margin-bottom: 20px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* styles/users.module.css */
+.pageButton {
+  color: #0f0;
+  background-color: black;
+  border: none;
+  padding: 20px;
+  margin: 5px;
+  font-size: 15px;
+}
+
+.pageButton:hover {
+  background-color: #0f0;
+  color: black;
+  cursor: pointer;
+}
+
+.activePage {
+  background-color: #0f0;
+  color: black;
+}
+
+.paginationButton {
+  color: #0f0;
+  background-color: black;
+  border: none;
+  padding: 20px;
+  margin: 5px;
+  font-size: 15px;
+}
+
+.paginationButton:hover {
+  background-color: #0f0;
+  color: black;
+  cursor: pointer;
+}
+
+.disabledPaginationButton {
+  color: #0f0;
+  background-color: black;
+  border: none;
+  padding: 20px;
+  margin: 5px;
+  font-size: 15px;
+  cursor: not-allowed;
+}
+
+.ellipsisButton {
+  color: #0f0;
+  background-color: black;
+  border: none;
+  padding: 20px;
+  margin: 5px;
+  font-size: 15px;
+}

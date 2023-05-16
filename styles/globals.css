@@ -1,0 +1,32 @@
+:root {
+  --background-color: #000;
+  --text-color: #21f500;
+  --inactive-page-button: #0b7000;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: "Courier New", Courier, monospace;
+}
+
+.pageButton {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+}
+
+.pageButton:hover {
+  background-color: var(--text-color);
+  color: var(--background-color);
+}
+
+.activePage {
+  background-color: var(--text-color);
+  color: var(--background-color);
+}
+
+a {
+  color: inherit; /* Наслідує колір тексту від батьківського елемента */
+  text-decoration: none; /* Видаляє підкреслення */
+}

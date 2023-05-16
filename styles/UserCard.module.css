@@ -1,0 +1,32 @@
+.card {
+  text-align: center;
+  color: #0f0;
+  background-color: rgba(0, 0, 0, 0.8); /* Чорний фон з прозорістю 80% */
+  border: 1px solid #0f0;
+  height: 20vh;
+  width: 15vw;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card img {
+  width: 5vw;
+  height: 5vw;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.card p {
+  text-align: center;
+  margin: 0;
+  color: #666;
+}
