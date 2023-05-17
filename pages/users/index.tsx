@@ -1,29 +1,42 @@
 import styles from "@/styles/users.module.css";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from "react";
 import UserList from "../../components/UserList";
 import SearchBar from "../../components/SearchBar";
 import { User } from "../../types";
-import { getUsers } from "../../lib/api";
+import { getUsers } from "../../utils/userUtils";
+import { getPaginationData } from "../../utils/pagination";
 import Link from "next/link";
 
-interface UsersPageProps {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const page = context.query.page ? Number(context.query.page) : 1;
+  const users = await getUsers(page);
+  return { props: { users, page } };
+};
+
+type UsersPageProps = {
+  //+
   users: User[];
   page: number;
-}
+};
 
-const UsersPage: React.FC<UsersPageProps> = ({ users, page }) => {
+const UsersPage: FC<UsersPageProps> = ({ users, page }) => {
+  //+
   const totalPages = 10;
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(page);
 
   const handlePaginationClick = (newPage: number) => {
+    //Оновлює стан currentPage для відображення активної сторінки,потім виконую router.push().
     setCurrentPage(newPage);
     router.push(`/users?page=${newPage}`);
   };
-
-  let paginationStart, paginationEnd;
+  //+
+  let { paginationStart, paginationEnd } = getPaginationData(
+    currentPage,
+    totalPages
+  );
 
   if (currentPage <= 3) {
     paginationStart = 1;
@@ -112,12 +125,6 @@ const UsersPage: React.FC<UsersPageProps> = ({ users, page }) => {
       </div>
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const page = context.query.page ? Number(context.query.page) : 1;
-  const users = await getUsers(page);
-  return { props: { users, page } };
-};
+}; //+
 
 export default UsersPage;

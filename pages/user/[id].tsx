@@ -1,15 +1,35 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import React from "react";
-import { getUserById } from "../../lib/api";
+import { FC } from "react";
+import { getUserById } from "../../utils/userUtils";
 import { User } from "../../types";
 import styles from "@/styles/UserPage.module.css";
 
-interface UserPageProps {
-  user: User;
-}
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const { id } = params;
+  const user = await getUserById(Number(id));
 
-const UserPage: React.FC<UserPageProps> = ({ user }) => {
+  if (!user) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      user,
+    },
+  };
+};
+
+type UserPageProps = {
+  //+
+  user: User;
+};
+
+const UserPage: FC<UserPageProps> = ({ user }) => {
+  //+
   const router = useRouter();
 
   if (router.isFallback) {
@@ -41,24 +61,6 @@ const UserPage: React.FC<UserPageProps> = ({ user }) => {
     </div>
   );
 };
-
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const { id } = context.params;
-  const user = await getUserById(Number(id));
-
-  if (!user) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: {
-      user,
-    },
-  };
-};
-
+//+
+//+
 export default UserPage;

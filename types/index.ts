@@ -1,6 +1,5 @@
-// src/types/index.ts
-
-export interface User {
+//+
+export type User = {
   id: number;
   firstName: string;
   lastName: string;
@@ -17,4 +16,4 @@ export interface User {
   height: number;
   weight: number;
   eyeColor: string;
-}
+};
