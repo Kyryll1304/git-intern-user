@@ -6,7 +6,10 @@ import { getUserById } from "../../utils/userUtils";
 import { User } from "../../types";
 import styles from "@/styles/UserPage.module.css";
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps<UserPageProps> = async ({
+  //+
+  params,
+}) => {
   const { id } = params;
   const user = await getUserById(Number(id));
 

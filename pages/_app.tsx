@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   const router = useRouter();
 
-  // Переадресація на /users при запуску сервера
   //+
   return (
     <>

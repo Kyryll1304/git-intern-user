@@ -26,6 +26,10 @@ const UsersPage: FC<UsersPageProps> = ({ users, page }) => {
   const totalPages = 10;
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(page);
+  const { paginationStart, paginationEnd } = getPaginationData(
+    currentPage,
+    totalPages
+  );
 
   const handlePaginationClick = (newPage: number) => {
     //Оновлює стан currentPage для відображення активної сторінки,потім виконую router.push().
@@ -33,22 +37,6 @@ const UsersPage: FC<UsersPageProps> = ({ users, page }) => {
     router.push(`/users?page=${newPage}`);
   };
   //+
-  let { paginationStart, paginationEnd } = getPaginationData(
-    currentPage,
-    totalPages
-  );
-
-  if (currentPage <= 3) {
-    paginationStart = 1;
-    paginationEnd = 4;
-  } else if (currentPage >= totalPages - 2) {
-    paginationStart = totalPages - 3;
-    paginationEnd = totalPages;
-  } else {
-    paginationStart = currentPage - 1;
-    paginationEnd = currentPage + 1;
-  }
-
   return (
     <div className={styles.container}>
       <h1 className={styles.heading}>Wake up,user...</h1>
@@ -57,10 +45,11 @@ const UsersPage: FC<UsersPageProps> = ({ users, page }) => {
       </div>
       <UserList users={users} />
       <div className={styles.pagination}>
-        {currentPage > 1 && (
+        {currentPage >= 1 && (
           <button
             className={styles.paginationButton}
             onClick={() => handlePaginationClick(currentPage - 1)}
+            disabled={currentPage === 1} //+
           >
             -
           </button>
@@ -114,10 +103,15 @@ const UsersPage: FC<UsersPageProps> = ({ users, page }) => {
             </Link>
           </>
         )}
-        {currentPage < totalPages && (
+        {currentPage <= totalPages && (
           <button
             className={styles.paginationButton}
-            onClick={() => handlePaginationClick(currentPage + 1)}
+            onClick={() => {
+              if (currentPage < totalPages) {
+                handlePaginationClick(currentPage + 1);
+              }
+            }}
+            disabled={currentPage === totalPages} //+
           >
             +
           </button>
