@@ -9,45 +9,36 @@ import { FaSearch, FaArrowRight } from "react-icons/fa";
 const SearchBar: FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<User[]>([]);
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-
   const router = useRouter();
 
   useEffect(() => {
-    //+
-    if (debouncedSearchTerm) {
-      const search = async () => {
-        let users: User[] = await searchUsers(debouncedSearchTerm);
+    const fetchSearchResults = async () => {
+      if (searchTerm.length >= 1) {
+        let users: User[] = await searchUsers(searchTerm);
         users = users.filter(
           (user) =>
-            user.firstName
-              .toLowerCase()
-              .includes(debouncedSearchTerm.toLowerCase()) ||
-            user.lastName
-              .toLowerCase()
-              .includes(debouncedSearchTerm.toLowerCase())
+            user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            user.lastName.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setSearchResults(users);
-      };
-      search();
-    } else {
+      } else {
+        setSearchResults([]);
+      }
+    };
+
+    fetchSearchResults();
+  }, [searchTerm]);
+
+  const handleBlur = () => {
+    // Затримка потрібна щоб закривати пошукову строку якщо юзер бажає
+    setTimeout(() => {
       setSearchResults([]);
-    }
-  }, [debouncedSearchTerm]);
+    }, 100);
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchTerm(value);
-
-    setTimeout(() => {
-      setDebouncedSearchTerm(value);
-    }, 500);
-  };
-
-  const handleBlur = () => {
-    setTimeout(() => {
-      setSearchResults([]);
-    }, 100);
   };
 
   //+
